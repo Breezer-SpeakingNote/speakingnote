@@ -14,7 +14,7 @@
 	<context:annotation-config />   
 
 	<context:component-scan
-		base-package="com.breeze2017.breezer.repository, com.breeze2017.breezer.service, com.breeze2017.breezer.exception">
+		base-package="com.breezer.speakingnote.repository, com.breezer.speakingnote.service, com.breezer.speakingnote.exception">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation"

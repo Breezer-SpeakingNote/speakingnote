@@ -36,33 +36,35 @@
 		
 	     <!-- argument resolver -->
 		<mvc:argument-resolvers>
-			<bean class="com.breeze2017.security.AuthUserHandlerMethodArgumentResolver" />
+			<bean class="com.breezer.speakingnote.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
 	     
 	</mvc:annotation-driven>
 	
 	<!-- Interceptors -->
-    <mvc:interceptors>
-        <!-- <mvc:interceptor>
+    <!-- <mvc:interceptors>
+        <mvc:interceptor>
         	<mvc:mapping path="/guestbook/**" /> 
     		<bean class="com.breeze.web.interceptor.MyInterceptor02" />
-        </mvc:interceptor> -->
+        </mvc:interceptor>
+        
         <mvc:interceptor>
         	<mvc:mapping path="/user/login"/>
-        	<bean class="com.breeze2017.security.AuthLoginInterceptor"/>
+        	<bean class="com.breezer.speakingnote.security.AuthLoginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
         	<mvc:mapping path="/user/logout"/>
-        	<bean class="com.breeze2017.security.AuthLogoutInterceptor"/>
+        	<bean class="com.breezer.speakingnote.security.AuthLogoutInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
         	<mvc:mapping path="/**"/>
         	<mvc:exclude-mapping path="/user/login"/>
         	<mvc:exclude-mapping path="/user/logout"/>
         	<mvc:exclude-mapping path="/assets/**"/>
-        	<bean class="com.breeze2017.security.AuthInterceptor"/>
+        	<bean class="com.breezer.speakingnote.security.AuthInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>
+        
+    </mvc:interceptors> -->
 	
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
@@ -72,7 +74,7 @@
 	<context:annotation-config />
 	
 	<!-- scanning 할 기준 패키지 -->
-	<context:component-scan base-package="com.breeze2017.breezer.controller" />
+	<context:component-scan base-package="com.breezer.speakingnote.controller" />
 	
 	<!-- View Resolver --> 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
