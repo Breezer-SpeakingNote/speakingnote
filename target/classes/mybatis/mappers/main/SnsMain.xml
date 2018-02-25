@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sns">
+	<select id="getlist" parameterType="map" resultType="snsvo">
+		<![CDATA[
+
+			select * ,
+					(select count(*) 
+					  from TB_FAVORITE 
+					  where userId=#{myid } and  IF( result.postIdx is null, 
+					  													tourIdx = result.tourIdx, 
+																		postIdx = result.postIdx)  ) as favoCount
+			from (select @ROWNUM := @ROWNUM + 1 as idx, f.*
+					from (select p.tourIdx tourIdx, p.idx postIdx, p.userId, u.nickName nickName,
+					  				null title,  p.content, p.photo, null startDate, 
+					  				null endDate, p.score, p.price, p.favorite, null as postCount,  p.postDateTime, 
+									p.tripDateTime,  p.location, u.pictureUrl
+							from TB_POST p, TB_TOUR t, TB_USER u
+							where p.userId = u.id and p.tourIdx = t.idx
+							UNION ALL 
+							select 	t.idx tourIdx, null postIdx, t.userId, u.nickName nickName, t.title title, 
+										t.title content, t.mainPhoto photo,    t.startDate,    
+										t.endDate, (select avg(score) from TB_POST where tourIdx = t.idx) as score, (select sum(price) from TB_POST where tourIdx = t.idx) as price, t.favorite, (select count(*) from TB_POST where tourIdx = t.idx) postCount, null postDateTime, 
+										p.tripDateTime, null location, u.pictureUrl
+							from TB_TOUR t, (	select p.tourIdx, p.idx, p.userId, max(p.tripDateTime) tripDateTime
+													from TB_POST p
+													group by p.tourIdx) p , TB_USER u
+							where t.idx = p.tourIdx and t.userId = p.userId and t.userId = u.id) f , (SELECT @ROWNUM := 0) r 
+					
+					order by f.tripDateTime, f.title ) result
+		]]>
+		<if test="idx > 0"> 
+		   <![CDATA[
+		   		where idx < #{idx }
+		   ]]>
+	    </if>
+		<![CDATA[
+	    	order by idx desc
+	    	limit 10 
+				    	
+		]]>
+	</select>		
+	
+		
+		
+		
+	<insert id="insertFavorite" parameterType="map">
+		<![CDATA[
+		 	 insert into TB_FAVORITE (userId, tourIdx, postIdx, insertDateTime)
+		 	 values(#{id }, #{tourIdx }, #{postIdx }, now() ) 
+	    ]]>		
+	</insert>	
+	
+	<delete id="deleteTourFavorite" parameterType="map">
+		<![CDATA[
+		 	 delete from TB_FAVORITE
+		 	 where  userId = #{id } and
+		 	 		tourIdx = #{tourIdx } 
+	    ]]>		
+	</delete>	
+	
+	<delete id="deletePostFavorite" parameterType="map">
+		<![CDATA[
+		 	 delete from TB_FAVORITE
+		 	 where  userId = #{id } and
+		 	 		postIdx = #{postIdx } 
+	    ]]>		
+	</delete>	
+	
+	<update id="refreshTourFavorite" parameterType="long">
+		<![CDATA[
+		 	 update TB_TOUR  
+		 	 set favorite = (select count(*) from TB_FAVORITE where tourIdx = #{idx })
+		 	  where idx = #{idx }
+	    ]]>	
+	</update>
+	
+	<update id="refreshPostFavorite" parameterType="long">
+		<![CDATA[
+		 	 update TB_POST  
+		 	 set favorite = (select count(*) from TB_FAVORITE where postIdx = #{idx })
+		 	  where idx = #{idx }
+	    ]]>	
+	</update>
+	
+	
+	
+	<select id="getlikerank" parameterType="int" resultType="likerankvo">
+		<![CDATA[
+			
+			select u.*,  
+					 IF( kind='p',	(select tourIdx from TB_POST p where p.idx=u.idx), (select null) )   as tourIdx,
+					 IF( kind='p', (select content from TB_POST p where p.idx=u.idx), (select title from TB_TOUR t where t.idx=u.idx)) as title,
+		 			 IF( kind='p', (select userId  from TB_POST p where p.idx=u.idx), (select userId from TB_TOUR t where t.idx=u.idx)) as userId
+			
+			from ( 
+				select o.tourIdx as idx, count(o.tourIdx) as count, "t" as kind, o.insertDateTime
+				from (
+						select * 
+						from TB_FAVORITE
+						where insertDateTime > date_add(now(), interval #{interval } hour) and tourIdx is not null
+						) o
+				group by tourIdx
+			
+				
+				UNION ALL
+			
+				select o.postIdx as idx, count(o.postIdx) as count, "p" as kind, o.insertDateTime
+				from (
+						select * 
+						from TB_FAVORITE 
+						where insertDateTime > date_add(now(), interval #{interval } hour) and postIdx is not null
+					) o
+				group by postIdx
+			
+			
+				) u
+			where idx is not null and insertDateTime > date_add(now(), interval #{interval } hour)
+			order by count desc, kind desc, insertDateTime desc
+			
+				    	
+		]]>
+	</select>	
+			
+	
+</mapper>

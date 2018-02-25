@@ -35,9 +35,9 @@
 		</mvc:message-converters>
 		
 	     <!-- argument resolver -->
-		<mvc:argument-resolvers>
+		<!-- <mvc:argument-resolvers>
 			<bean class="com.breezer.speakingnote.security.AuthUserHandlerMethodArgumentResolver" />
-		</mvc:argument-resolvers>
+		</mvc:argument-resolvers> -->
 	     
 	</mvc:annotation-driven>
 	
