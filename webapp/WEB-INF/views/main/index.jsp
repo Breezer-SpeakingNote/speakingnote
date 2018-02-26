@@ -17,7 +17,12 @@
 </head>
 
 <body>
-	환영합니다.
+	<c:import url="/WEB-INF/views/includes/header_main.jsp" />
+	<div>
+		<c:import url="/WEB-INF/views/includes/left_menu.jsp" />
+		<c:import url="/WEB-INF/views/includes/right_menu.jsp" />	
+	</div>
+	
 </body>
 
 </html>

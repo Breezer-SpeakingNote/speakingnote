@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserMainController {
 
-	@RequestMapping({"", "/", "login"})
+	@RequestMapping({"", "/", "loginpage"})
 	public String Main() {
-		return "user/login";
+		System.out.println("====== UserMainController : loginpage ======");
+		return "user/loginpage";
 	}
 }
