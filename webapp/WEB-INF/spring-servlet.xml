@@ -35,18 +35,18 @@
 		</mvc:message-converters>
 		
 	     <!-- argument resolver -->
-		<!-- <mvc:argument-resolvers>
+		<mvc:argument-resolvers>
 			<bean class="com.breezer.speakingnote.security.AuthUserHandlerMethodArgumentResolver" />
-		</mvc:argument-resolvers> -->
+		</mvc:argument-resolvers>
 	     
 	</mvc:annotation-driven>
 	
 	<!-- Interceptors -->
-    <!-- <mvc:interceptors>
-        <mvc:interceptor>
+    <mvc:interceptors>
+        <!-- <mvc:interceptor>
         	<mvc:mapping path="/guestbook/**" /> 
     		<bean class="com.breeze.web.interceptor.MyInterceptor02" />
-        </mvc:interceptor>
+        </mvc:interceptor> -->
         
         <mvc:interceptor>
         	<mvc:mapping path="/user/login"/>
@@ -64,7 +64,7 @@
         	<bean class="com.breezer.speakingnote.security.AuthInterceptor"/>
         </mvc:interceptor>
         
-    </mvc:interceptors> -->
+    </mvc:interceptors>
 	
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
