@@ -17,7 +17,11 @@
 </head>
 
 <body>
-	login.jsp
+	<c:import url="/WEB-INF/views/includes/header_simple.jsp" />
+	
+	<div>
+		로그인 해보입시다.
+	</div>
 </body>
 
 </html>

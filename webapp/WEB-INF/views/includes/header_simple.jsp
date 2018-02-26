@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 
+	<!-- css -->
+	<link href="${pageContext.servletContext.contextPath }/assets/css/includes/header_simple.css" rel="stylesheet" type="text/css">
 
-
-	<div style="width: 100%; height: 500px; background-color: #ffff44; margin: 0px;">
+	<div class="simple_header" >
 		
 	</div>
 
