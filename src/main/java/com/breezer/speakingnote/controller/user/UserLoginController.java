@@ -3,9 +3,9 @@ package com.breezer.speakingnote.controller.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("UserMainController")
+@Controller("UserLoginController")
 @RequestMapping("/user")
-public class UserMainController {
+public class UserLoginController {
 
 	@RequestMapping({"", "/", "loginpage"})
 	public String Main() {
