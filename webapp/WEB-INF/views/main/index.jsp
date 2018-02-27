@@ -9,6 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+
+
 <!-- Jquery -->
 <script type="text/javascript"	src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.2.1.js"></script>
 
@@ -17,7 +19,12 @@
 </head>
 
 <body>
-	환영합니다.
+	<c:import url="/WEB-INF/views/includes/header_main.jsp" />
+	<div>
+		<c:import url="/WEB-INF/views/includes/left_menu.jsp" />
+		<c:import url="/WEB-INF/views/includes/right_menu.jsp" />	
+	</div>
+	
 </body>
 
 </html>
